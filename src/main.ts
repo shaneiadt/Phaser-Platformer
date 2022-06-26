@@ -1,17 +1,15 @@
 import * as Phaser from 'phaser';
-import Scenes from './scenes';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'Sample',
-
+  title: 'Phaser Platformer',
   type: Phaser.AUTO,
 
   scale: {
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 800,
+    height: 800,
   },
 
-  scene: Scenes,
+  scene: [],
 
   physics: {
     default: 'arcade',

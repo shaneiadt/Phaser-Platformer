@@ -1,9 +1,9 @@
 {
-  "name": "sample-phaser3-typescript-project",
+  "name": "phaser-platformer",
   "version": "1.0.1",
-  "description": "A sample project using Phaser 3 and TypeScript",
+  "description": "A Phaser 3 demo platoformer",
   "main": "src/main.ts",
-  "author": "Joe Bustamante",
+  "author": "Shane O'Moore",
   "license": "MIT",
   "private": false,
   "scripts": {
