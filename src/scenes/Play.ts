@@ -1,6 +1,8 @@
-// TODO: Add player movement
-
 class PlayScene extends Phaser.Scene {
+  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  velocity: number;
+
   constructor(config) {
     super('Play');
   }
@@ -8,9 +10,11 @@ class PlayScene extends Phaser.Scene {
   create = (): void => {
     const map = this.createMap();
     const layers = this.createLayers(map);
-    const player = this.createPlayer();
+    this.player = this.createPlayer();
+    this.velocity = 200;
+    this.physics.add.collider(this.player, layers.platformColliders);
 
-    this.physics.add.collider(player, layers.platformColliders);
+    this.cursors = this.input.keyboard.createCursorKeys();
   };
 
   createPlayer = (): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody => {
@@ -47,6 +51,20 @@ class PlayScene extends Phaser.Scene {
       platforms,
       platformColliders,
     };
+  };
+
+  update = (): void => {
+    const { left, right } = this.cursors;
+
+    if (left.isDown) {
+      this.player.setVelocityX(-this.velocity);
+      !this.player.flipX && this.player.setFlipX(true);
+    } else if (right.isDown) {
+      this.player.setVelocityX(this.velocity);
+      this.player.flipX && this.player.setFlipX(false);
+    } else {
+      this.player.setVelocityX(0);
+    }
   };
 }
 
