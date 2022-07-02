@@ -1,3 +1,5 @@
+// TODO: Add player movement
+
 class PlayScene extends Phaser.Scene {
   constructor(config) {
     super('Play');
