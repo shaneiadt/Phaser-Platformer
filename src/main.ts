@@ -1,25 +1,32 @@
 import * as Phaser from 'phaser';
 
+import PlayScene from './scenes/PlayScene';
+
+const WIDTH = 1280;
+const HEIGHT = 600;
+
+const SHARED_CONFIG = {
+  width: WIDTH,
+  height: HEIGHT,
+};
+
+const Scenes = [PlayScene];
+
+const initScenes = () => Scenes.map((Scene) => new Scene(SHARED_CONFIG));
+
 const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'Phaser Platformer',
   type: Phaser.AUTO,
-
-  scale: {
-    width: 800,
-    height: 800,
+  ...SHARED_CONFIG,
+  render: {
+    pixelArt: true,
   },
-
-  scene: [],
-
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      // debug: true,
     },
   },
-
-  parent: 'game',
-  backgroundColor: '#000000',
+  scene: initScenes(),
 };
 
 export const game = new Phaser.Game(gameConfig);
