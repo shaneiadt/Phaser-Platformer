@@ -1,10 +1,6 @@
 import Player from '../entities/Player';
 
 class PlayScene extends Phaser.Scene {
-  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  player: Player;
-  velocity: number;
-
   constructor(config) {
     super('Play');
   }
@@ -12,19 +8,9 @@ class PlayScene extends Phaser.Scene {
   create = (): void => {
     const map = this.createMap();
     const layers = this.createLayers(map);
-    this.player = this.createPlayer();
-    this.velocity = 200;
-    this.physics.add.collider(this.player, layers.platformColliders);
-
-    this.cursors = this.input.keyboard.createCursorKeys();
-  };
-
-  createPlayer = (): Player => {
     const player = new Player(this, 100, 250);
 
-    player.setGravityY(500);
-
-    return player;
+    this.physics.add.collider(player, layers.platformColliders);
   };
 
   createMap = (): Phaser.Tilemaps.Tilemap => {
@@ -58,17 +44,7 @@ class PlayScene extends Phaser.Scene {
   };
 
   update = (): void => {
-    const { left, right } = this.cursors;
-
-    if (left.isDown) {
-      this.player.setVelocityX(-this.velocity);
-      !this.player.flipX && this.player.setFlipX(true);
-    } else if (right.isDown) {
-      this.player.setVelocityX(this.velocity);
-      this.player.flipX && this.player.setFlipX(false);
-    } else {
-      this.player.setVelocityX(0);
-    }
+    //
   };
 }
 
