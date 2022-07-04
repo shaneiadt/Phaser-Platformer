@@ -1,3 +1,5 @@
+import initAnimations from './playerAnims';
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   gravity: number;
   speed: number;
@@ -15,10 +17,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   init = (): void => {
     this.gravity = 500;
-    this.speed = 200;
+    this.speed = 150;
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     this.setGravityY(this.gravity);
+
+    initAnimations(this.scene.anims);
   };
 
   initEvents = (): void => {
@@ -26,17 +30,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   };
 
   update = (): void => {
-    const { left, right } = this.cursors;
+    const { left, right, up } = this.cursors;
 
     if (left.isDown) {
       this.setVelocityX(-this.speed);
-      !this.flipX && this.setFlipX(true);
+      this.setFlipX(true);
     } else if (right.isDown) {
       this.setVelocityX(this.speed);
-      this.flipX && this.setFlipX(false);
+      this.setFlipX(false);
     } else {
       this.setVelocityX(0);
     }
+
+    if (up.isDown) {
+      this.setVelocityY(-200);
+      this.play('run', true);
+    }
+
+    this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true);
   };
 }
 
