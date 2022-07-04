@@ -1,6 +1,8 @@
+import Player from '../entities/Player';
+
 class PlayScene extends Phaser.Scene {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  player: Player;
   velocity: number;
 
   constructor(config) {
@@ -17,8 +19,10 @@ class PlayScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   };
 
-  createPlayer = (): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody => {
-    const player = this.physics.add.sprite(100, 250, 'player').setGravityY(500);
+  createPlayer = (): Player => {
+    const player = new Player(this, 100, 250);
+
+    player.setGravityY(500);
 
     return player;
   };
