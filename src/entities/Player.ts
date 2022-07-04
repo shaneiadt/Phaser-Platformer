@@ -4,6 +4,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   gravity: number;
   speed: number;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  body: Phaser.Physics.Arcade.Body;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'player');
@@ -30,7 +31,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   };
 
   update = (): void => {
-    const { left, right, up } = this.cursors;
+    const { left, right, space, up } = this.cursors;
+    const onFloor = this.body.onFloor();
 
     if (left.isDown) {
       this.setVelocityX(-this.speed);
@@ -42,9 +44,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
     }
 
-    if (up.isDown) {
-      this.setVelocityY(-200);
-      this.play('run', true);
+    if ((space.isDown || up.isDown) && onFloor) {
+      this.body.velocity.y === 0 && this.setVelocityY(-this.speed * 1.5);
     }
 
     this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true);
