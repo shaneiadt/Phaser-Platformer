@@ -10,6 +10,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     this.init();
+    this.initEvents();
   }
 
   init = (): void => {
@@ -20,9 +21,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(this.gravity);
   };
 
-  preUpdate = (time: number, delta: number): void => {
-    super.preUpdate(time, delta);
+  initEvents = (): void => {
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update);
+  };
 
+  update = (): void => {
     const { left, right } = this.cursors;
 
     if (left.isDown) {
