@@ -20,7 +20,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(this.gravity);
   };
 
-  preUpdate = (): void => {
+  preUpdate = (time: number, delta: number): void => {
+    super.preUpdate(time, delta);
+
     const { left, right } = this.cursors;
 
     if (left.isDown) {
