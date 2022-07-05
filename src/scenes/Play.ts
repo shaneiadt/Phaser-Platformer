@@ -42,10 +42,6 @@ class PlayScene extends Phaser.Scene {
       platformColliders,
     };
   };
-
-  update = (): void => {
-    //
-  };
 }
 
 export default PlayScene;
