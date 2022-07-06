@@ -61,6 +61,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     onFloor ? (this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true)) : this.play('jump', true);
   };
+
+  addCollider = (object: Phaser.GameObjects.GameObject, callback?: () => void): void => {
+    this.scene.physics.add.collider(this, object, callback);
+  };
 }
 
 export default Player;

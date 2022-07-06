@@ -10,7 +10,7 @@ class PlayScene extends Phaser.Scene {
     const layers = this.createLayers(map);
     const player = new Player(this, 100, 250);
 
-    this.physics.add.collider(player, layers.platformColliders);
+    player.addCollider(layers.platformColliders);
   };
 
   createMap = (): Phaser.Tilemaps.Tilemap => {
