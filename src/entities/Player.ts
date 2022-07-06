@@ -51,7 +51,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < this.consecutiveJumps)) {
-      this.setVelocityY(-this.speed * 1.5);
+      this.setVelocityY(-this.speed * 1.75);
       this.jumpCount++;
     }
 
@@ -59,7 +59,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.jumpCount = 0;
     }
 
-    this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true);
+    onFloor ? (this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true)) : this.play('jump', true);
   };
 }
 
