@@ -1,6 +1,7 @@
+import BaseEntity from './BaseEntity';
 import initAnimations from './playerAnims';
 
-class Player extends Phaser.Physics.Arcade.Sprite {
+class Player extends BaseEntity {
   gravity: number;
   speed: number;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -60,10 +61,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onFloor ? (this.body.velocity.x !== 0 ? this.play('run', true) : this.play('idle', true)) : this.play('jump', true);
-  };
-
-  addCollider = (object: Phaser.GameObjects.GameObject, callback?: () => void): void => {
-    this.scene.physics.add.collider(this, object, callback);
   };
 }
 
