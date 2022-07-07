@@ -17,6 +17,8 @@ class Player extends BaseEntity {
 
     this.setCollideWorldBounds(true);
 
+    this.setOrigin(0.5, 1);
+
     this.init();
     this.initEvents();
   }
