@@ -19,7 +19,7 @@ class PlayScene extends Phaser.Scene {
   create = (): void => {
     const map = this.createMap();
     const layers = this.createLayers(map);
-    const { start } = this.getPlayerZones(layers.playerZones);
+    const { start, end } = this.getPlayerZones(layers.playerZones);
     const player = new Player(this, start.x, start.y);
 
     this.createPlayerColliders(player, {
@@ -28,6 +28,7 @@ class PlayScene extends Phaser.Scene {
       },
     });
 
+    this.createEndOfLevel(end, player);
     this.setupFollowupCameraOn(player);
   };
 
@@ -92,6 +93,17 @@ class PlayScene extends Phaser.Scene {
       end: playerZones[1],
     };
   };
+
+  createEndOfLevel(end: Phaser.Types.Tilemaps.TiledObject, player: Player): void {
+    const endOfLevel = this.physics.add
+      .sprite(end.x, end.y, 'end')
+      .setSize(5, this.config.height * 2)
+      .setAlpha(0);
+
+    const eolOverlap = this.physics.add.overlap(player, endOfLevel, () => {
+      eolOverlap.active = false;
+    });
+  }
 }
 
 export default PlayScene;
