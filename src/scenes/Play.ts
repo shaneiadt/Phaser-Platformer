@@ -10,7 +10,11 @@ class PlayScene extends Phaser.Scene {
     const layers = this.createLayers(map);
     const player = new Player(this, 100, 250);
 
-    player.addCollider(layers.platformColliders);
+    this.createPlayerColliders(player, {
+      colliders: {
+        platformColliders: layers.platformColliders,
+      },
+    });
   };
 
   createMap = (): Phaser.Tilemaps.Tilemap => {
@@ -41,6 +45,13 @@ class PlayScene extends Phaser.Scene {
       platforms,
       platformColliders,
     };
+  };
+
+  createPlayerColliders = (
+    player: Player,
+    { colliders }: { colliders: { platformColliders: Phaser.Tilemaps.TilemapLayer } },
+  ): void => {
+    player.addCollider(colliders.platformColliders);
   };
 }
 
