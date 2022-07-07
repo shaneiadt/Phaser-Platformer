@@ -4,6 +4,7 @@ type ISharedConfig = {
   height: number;
   width: number;
   mapOffset: number;
+  zoom: number;
 };
 
 class PlayScene extends Phaser.Scene {
@@ -67,10 +68,10 @@ class PlayScene extends Phaser.Scene {
   };
 
   setupFollowupCameraOn = (player: Player): void => {
-    const { height, width, mapOffset } = this.config;
+    const { height, width, mapOffset, zoom } = this.config;
 
     this.physics.world.setBounds(0, 0, width + mapOffset, height);
-    this.cameras.main.setBounds(0, 0, width + mapOffset, height);
+    this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(zoom);
     this.cameras.main.startFollow(player);
   };
 }
