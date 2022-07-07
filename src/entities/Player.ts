@@ -15,6 +15,8 @@ class Player extends BaseEntity {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    this.setCollideWorldBounds(true);
+
     this.init();
     this.initEvents();
   }

@@ -1,8 +1,18 @@
 import Player from '../entities/Player';
 
+type ISharedConfig = {
+  height: number;
+  width: number;
+  mapOffset: number;
+};
+
 class PlayScene extends Phaser.Scene {
-  constructor(config) {
+  config: ISharedConfig;
+
+  constructor(config: ISharedConfig) {
     super('Play');
+
+    this.config = config;
   }
 
   create = (): void => {
@@ -15,6 +25,8 @@ class PlayScene extends Phaser.Scene {
         platformColliders: layers.platformColliders,
       },
     });
+
+    this.setupFollowupCameraOn(player);
   };
 
   createMap = (): Phaser.Tilemaps.Tilemap => {
@@ -52,6 +64,14 @@ class PlayScene extends Phaser.Scene {
     { colliders }: { colliders: { platformColliders: Phaser.Tilemaps.TilemapLayer } },
   ): void => {
     player.addCollider(colliders.platformColliders);
+  };
+
+  setupFollowupCameraOn = (player: Player): void => {
+    const { height, width, mapOffset } = this.config;
+
+    this.physics.world.setBounds(0, 0, width + mapOffset, height);
+    this.cameras.main.setBounds(0, 0, width + mapOffset, height);
+    this.cameras.main.startFollow(player);
   };
 }
 
