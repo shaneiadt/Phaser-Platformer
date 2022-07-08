@@ -1,3 +1,5 @@
+import BaseEntity from '../entities/BaseEntity';
+import Enemy from '../entities/Enemy';
 import Player from '../entities/Player';
 
 type ISharedConfig = {
@@ -21,12 +23,11 @@ class PlayScene extends Phaser.Scene {
     const layers = this.createLayers(map);
     const { start, end } = this.getPlayerZones(layers.playerZones);
     const player = new Player(this, start.x, start.y);
+    const enemy = new Enemy(this, 200, 200);
 
-    this.createPlayerColliders(player, {
-      colliders: {
-        platformColliders: layers.platformColliders,
-      },
-    });
+    this.createEntityColliders(player, [{ collidable: layers.platformColliders }]);
+
+    this.createEntityColliders(enemy, [{ collidable: layers.platformColliders }, { collidable: player }]);
 
     this.createEndOfLevel(end, player);
     this.setupFollowupCameraOn(player);
@@ -65,11 +66,13 @@ class PlayScene extends Phaser.Scene {
     };
   };
 
-  createPlayerColliders = (
-    player: Player,
-    { colliders }: { colliders: { platformColliders: Phaser.Tilemaps.TilemapLayer } },
+  createEntityColliders = (
+    entity: BaseEntity,
+    colliders: { collidable: Phaser.GameObjects.GameObject; callback?: () => void }[],
   ): void => {
-    player.addCollider(colliders.platformColliders);
+    for (const collider of colliders) {
+      entity.addCollider(collider.collidable, collider.callback);
+    }
   };
 
   setupFollowupCameraOn = (player: Player): void => {
