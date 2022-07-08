@@ -31,6 +31,7 @@ class Player extends BaseEntity {
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     this.setGravityY(this.gravity);
+    this.setSize(20, 36);
 
     initAnimations(this.scene.anims);
   };

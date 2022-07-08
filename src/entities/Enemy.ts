@@ -23,8 +23,8 @@ class Enemy extends BaseEntity {
     this.speed = 150;
 
     this.setGravityY(this.gravity);
-    this.setSize(this.width, this.height - 20);
-    this.setOffset(0, 20);
+    this.setSize(20, 45);
+    this.setOffset(7, 20);
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
   };
