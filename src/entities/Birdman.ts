@@ -1,6 +1,6 @@
 import Enemy from './Enemy';
 
-import initAnims from './birdmanAnims';
+import initAnims from '../anims/birdmanAnims';
 
 class Birdman extends Enemy {
   gravity: number;

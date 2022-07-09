@@ -1,5 +1,5 @@
 import BaseEntity from './BaseEntity';
-import initAnimations from './playerAnims';
+import initAnimations from '../anims/playerAnims';
 
 class Player extends BaseEntity {
   gravity: number;
