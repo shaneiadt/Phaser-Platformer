@@ -1,5 +1,5 @@
 import Birdman from '../entities/Birdman';
 
-export const EnemyTypes: any = {
+export const EnemyTypes: unknown = {
   Birdman,
 };

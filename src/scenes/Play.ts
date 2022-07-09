@@ -1,8 +1,7 @@
 import BaseEntity from '../entities/BaseEntity';
 import Enemy from '../entities/Enemy';
 import Player from '../entities/Player';
-
-import { EnemyTypes } from './../types/index';
+import Enemies from '../groups/Enemies';
 
 type ISharedConfig = {
   height: number;
@@ -29,8 +28,8 @@ class PlayScene extends Phaser.Scene {
 
     this.createEntityColliders(player, [{ collidable: layers.platformColliders }]);
 
-    for (const enemy of enemies) {
-      this.createEntityColliders(enemy, [{ collidable: layers.platformColliders }, { collidable: player }]);
+    for (const enemy of enemies.children.entries) {
+      this.createEntityColliders(enemy as Enemy, [{ collidable: layers.platformColliders }, { collidable: player }]);
     }
 
     this.createEndOfLevel(end, player);
@@ -115,8 +114,9 @@ class PlayScene extends Phaser.Scene {
     });
   }
 
-  createEnemmies(enemySpawns: Phaser.Tilemaps.ObjectLayer): Enemy[] {
-    const enemies: Enemy[] = [];
+  createEnemmies(enemySpawns: Phaser.Tilemaps.ObjectLayer): Enemies {
+    const enemies = new Enemies(this);
+    const enemyTypes = enemies.getTypes();
     const spawns = enemySpawns.objects;
 
     for (const spawn of spawns) {
@@ -124,7 +124,7 @@ class PlayScene extends Phaser.Scene {
       const properties: { name: string; value: string }[] = spawn.properties;
       const type = properties.find(({ name }) => name === 'Type').value;
 
-      enemies.push(new EnemyTypes[type](this, x, y));
+      enemies.add(new enemyTypes[type](this, x, y));
     }
 
     return enemies;
