@@ -23,11 +23,13 @@ class PlayScene extends Phaser.Scene {
     const layers = this.createLayers(map);
     const { start, end } = this.getPlayerZones(layers.playerZones);
     const player = new Player(this, start.x, start.y);
-    const enemy = new Enemy(this, 200, 200);
+    const enemies = this.createEnemmies(layers.enemySpawns);
 
     this.createEntityColliders(player, [{ collidable: layers.platformColliders }]);
 
-    this.createEntityColliders(enemy, [{ collidable: layers.platformColliders }, { collidable: player }]);
+    for (const enemy of enemies) {
+      this.createEntityColliders(enemy, [{ collidable: layers.platformColliders }, { collidable: player }]);
+    }
 
     this.createEndOfLevel(end, player);
     this.setupFollowupCameraOn(player);
@@ -48,6 +50,7 @@ class PlayScene extends Phaser.Scene {
     platforms: Phaser.Tilemaps.TilemapLayer;
     platformColliders: Phaser.Tilemaps.TilemapLayer;
     playerZones: Phaser.Tilemaps.ObjectLayer;
+    enemySpawns: Phaser.Tilemaps.ObjectLayer;
   } => {
     const tileset = map.getTileset('main_lev_build_1');
 
@@ -55,6 +58,7 @@ class PlayScene extends Phaser.Scene {
     const env = map.createLayer('environment', tileset);
     const platforms = map.createLayer('platforms', tileset);
     const playerZones = map.getObjectLayer('player_zones');
+    const enemySpawns = map.getObjectLayer('enemy_spawns');
 
     platformColliders.setCollisionByProperty({ collides: true });
 
@@ -63,6 +67,7 @@ class PlayScene extends Phaser.Scene {
       platforms,
       platformColliders,
       playerZones,
+      enemySpawns,
     };
   };
 
@@ -106,6 +111,17 @@ class PlayScene extends Phaser.Scene {
     const eolOverlap = this.physics.add.overlap(player, endOfLevel, () => {
       eolOverlap.active = false;
     });
+  }
+
+  createEnemmies(enemySpawns: Phaser.Tilemaps.ObjectLayer): Enemy[] {
+    const enemies: Enemy[] = [];
+    const spawns = enemySpawns.objects;
+
+    for (const spawn of spawns) {
+      enemies.push(new Enemy(this, spawn.x, spawn.y));
+    }
+
+    return enemies;
   }
 }
 
