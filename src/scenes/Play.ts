@@ -2,6 +2,8 @@ import BaseEntity from '../entities/BaseEntity';
 import Enemy from '../entities/Enemy';
 import Player from '../entities/Player';
 
+import { EnemyTypes } from './../types/index';
+
 type ISharedConfig = {
   height: number;
   width: number;
@@ -118,7 +120,11 @@ class PlayScene extends Phaser.Scene {
     const spawns = enemySpawns.objects;
 
     for (const spawn of spawns) {
-      enemies.push(new Enemy(this, spawn.x, spawn.y));
+      const { x, y } = spawn;
+      const properties: { name: string; value: string }[] = spawn.properties;
+      const type = properties.find(({ name }) => name === 'Type').value;
+
+      enemies.push(new EnemyTypes[type](this, x, y));
     }
 
     return enemies;
