@@ -11,6 +11,7 @@ class Birdman extends Enemy {
     super(scene, x, y, 'birdman');
 
     initAnims(this.scene.anims);
+
     this.initEvents();
   }
 
